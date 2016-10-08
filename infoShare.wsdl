@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:infoShare" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:infoShare">
+<types>
+<xsd:schema targetNamespace="urn:infoShare"
+>
+ <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+ <xsd:complexType name="Category">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="name" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="Categories">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Category[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="Information">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="userId" type="xsd:int"/>
+   <xsd:element name="categoryId" type="xsd:int"/>
+   <xsd:element name="information" type="xsd:string"/>
+   <xsd:element name="public" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="Informations">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Information[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+</xsd:schema>
+</types>
+<message name="getInformationsRequest">
+  <part name="category" type="xsd:string" /></message>
+<message name="getInformationsResponse">
+  <part name="return" type="tns:Informations" /></message>
+<message name="getCategoriesRequest"></message>
+<message name="getCategoriesResponse">
+  <part name="return" type="tns:Categories" /></message>
+<message name="addInformationRequest">
+  <part name="userId" type="xsd:string" />
+  <part name="categoryName" type="xsd:string" />
+  <part name="content" type="xsd:string" /></message>
+<message name="addInformationResponse">
+  <part name="return" type="xsd:boolean" /></message>
+<message name="addCategoryRequestRequest">
+  <part name="userId" type="xsd:string" />
+  <part name="name" type="xsd:string" /></message>
+<message name="addCategoryRequestResponse">
+  <part name="return" type="xsd:boolean" /></message>
+<message name="registerRequest">
+  <part name="email" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="registerResponse">
+  <part name="return" type="xsd:integer" /></message>
+<message name="authenticateRequest">
+  <part name="email" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="authenticateResponse">
+  <part name="return" type="xsd:integer" /></message>
+<message name="confirmUserRequest">
+  <part name="email" type="xsd:string" /></message>
+<message name="confirmUserResponse">
+  <part name="return" type="xsd:boolean" /></message>
+<portType name="infoSharePortType">
+  <operation name="getInformations">
+    <documentation>Get a listing of informations by category</documentation>
+    <input message="tns:getInformationsRequest"/>
+    <output message="tns:getInformationsResponse"/>
+  </operation>
+  <operation name="getCategories">
+    <documentation>Get a listing of available categories</documentation>
+    <input message="tns:getCategoriesRequest"/>
+    <output message="tns:getCategoriesResponse"/>
+  </operation>
+  <operation name="addInformation">
+    <documentation>Add new information</documentation>
+    <input message="tns:addInformationRequest"/>
+    <output message="tns:addInformationResponse"/>
+  </operation>
+  <operation name="addCategoryRequest">
+    <documentation>Request for new category</documentation>
+    <input message="tns:addCategoryRequestRequest"/>
+    <output message="tns:addCategoryRequestResponse"/>
+  </operation>
+  <operation name="register">
+    <documentation>Creating new user</documentation>
+    <input message="tns:registerRequest"/>
+    <output message="tns:registerResponse"/>
+  </operation>
+  <operation name="authenticate">
+    <documentation>System authentication</documentation>
+    <input message="tns:authenticateRequest"/>
+    <output message="tns:authenticateResponse"/>
+  </operation>
+  <operation name="confirmUser">
+    <documentation>Activating the user</documentation>
+    <input message="tns:confirmUserRequest"/>
+    <output message="tns:confirmUserResponse"/>
+  </operation>
+</portType>
+<binding name="infoShareBinding" type="tns:infoSharePortType">
+  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="getInformations">
+    <soap:operation soapAction="urn:infoShare#getInformations" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="getCategories">
+    <soap:operation soapAction="urn:infoShare#getCategories" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="addInformation">
+    <soap:operation soapAction="urn:infoShare#addInformation" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="addCategoryRequest">
+    <soap:operation soapAction="urn:infoShare#addCategoryRequest" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="register">
+    <soap:operation soapAction="urn:infoShare#register" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="authenticate">
+    <soap:operation soapAction="urn:infoShare#authenticate" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="confirmUser">
+    <soap:operation soapAction="urn:infoShare#confirmUser" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:infoShare" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+</binding>
+<service name="infoShare">
+  <port name="infoSharePort" binding="tns:infoShareBinding">
+    <soap:address location="http://localhost:8081/infoShare/infoShare.php"/>
+  </port>
+</service>
+</definitions>
